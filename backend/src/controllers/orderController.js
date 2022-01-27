@@ -42,6 +42,21 @@ export const getOrderById = asyncHandler(async (req, res) =>{
     //res.json() con la orden encontrada 
     // Sino  retornar status 404
     // Y arrojar el error: 'Order not found
+    //order.user._id === req.user._id metodo equals
+    const {name , email} = req.body;
+    const order=await Order.findById(req.params.id).populate('user', 'name email');
+    if(order && req.user.isAdmin && order.user._id.equals(req.user._id)){
+        res.json({
+            name: req.user.name,
+            email: req.user.email
+        })
+
+
+    }else {
+        res.status(404);
+        throw new Error('Order not found');
+    }
+
 });
 
 // @desc    Update order to paid
