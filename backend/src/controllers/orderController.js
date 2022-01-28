@@ -43,7 +43,6 @@ export const getOrderById = asyncHandler(async (req, res) =>{
     // Sino  retornar status 404
     // Y arrojar el error: 'Order not found
     //order.user._id === req.user._id metodo equals
-    const {name , email} = req.body;
     const order=await Order.findById(req.params.id).populate('user', 'name email');
     if(order && req.user.isAdmin && order.user._id.equals(req.user._id)){
         res.json({
@@ -87,6 +86,24 @@ export const updateOrderToDelivered = asyncHandler(async (req,res) => {
     //Asignar a isDelivered true y a deliveredAt la fecha actual
     // Realizar un .save() y retornar la orden actualizada
     //Si no retornar status 404 y arrojar el error: 'Order not found'
+    const { isDelivered , deliveredAt} = req.body;
+    const order=await Order.findById(req.params.id);
+    if(order && req.user.isAdmin && order.user._id.equals(req.user._id)){
+        order.isDelivered = isDelivered ?? order.isDelivered;
+        order.deliveredAt = deliveredAt ?? order.deliveredAt;
+
+        const updateOrderToDelivered = await order.save();
+
+        res.json ({
+            isDelivered: order.isDelivered,
+            deliveredAt: order.deliveredAt,
+            
+        });
+    }else {
+        res.status(404);
+        throw new Error('Order not found');
+    }
+
 });
 
 // @desc    Get logged in user orders
