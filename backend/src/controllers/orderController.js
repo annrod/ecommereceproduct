@@ -49,8 +49,7 @@ export const getOrderById = asyncHandler(async (req, res) =>{
         res.json({
             name: req.user.name,
             email: req.user.email
-        })
-
+        });
 
     }else {
         res.status(404);
@@ -97,6 +96,15 @@ export const getMyOrders = asyncHandler(async (req, res) =>{
     //Usar find y en el parametro enviar la propiedad user con 
     // el id que viene del req.user
     //Retornar un json() con las ordenes
+   const {name} = req.body;
+   const order = await Order.find({user: req.user._id});
+   
+    return res.json({    
+        //paymentMethod: order.paymentMethod,
+        //totalPrice: order.totalPrice,
+        name:req.user.name,
+        order
+    });
 });
 
 //@desc     Get all orders
@@ -105,5 +113,10 @@ export const getMyOrders = asyncHandler(async (req, res) =>{
 export const getOrders = asyncHandler(async (req, res) =>{
     //Usar find y popular con los datos del user: id y name
     //Retornar un json() con las ordenes
+    const {name , email} = req.body;
+    const order=await Order.find({user: req.user.id}).populate('user', 'name');
+         return res.json({
+            name:req.user.name,
+            order
+        });
 });
-
