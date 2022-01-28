@@ -75,7 +75,35 @@ export const updateOrderToPaid = asyncHandler(async (req, res) =>{
         //email_address:req.body.payer.email_address,
         //};
     //Realizar un .save() y retornar la orden actualizada
-    // Sino retornar status 404 y arrojar el error: 'Order not found'
+    // Sino retornar status 404 y arrojar el error: 'Order not found'    
+    const order=await Order.findById(req.params.id);
+    const idaux = order.id;
+    
+    console.log(req.body.email_address) ;
+    console.log('Enserio', order.paymentResult.id);
+    if(order && req.user.isAdmin || order.user._id.equals(req.user._id)){
+
+        order.isPaid = true;
+        order.paiAt = new Date();          
+        order.paymentResult = {
+            id: idaux,
+            status: req.body.status,
+            update_time:  req.body.update_time,
+            email_address: req.body.email_address,
+        };
+        const updateOrderToPaid = await order.save();
+        
+        res.json({
+            id: order.paymentResult.id,  
+            status: order.paymentResult.status,
+            update_time: order.paymentResult.update_time,
+            email_address: order.paymentResult.email_address,
+        });
+
+    }else {
+        res.status(404);
+        throw new Error('Order not found');
+    }
 });
 
 // @desc    Update order to delivered
