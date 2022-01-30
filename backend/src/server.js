@@ -5,6 +5,7 @@ import config from './config/index.js';
 import routes from './routes/index.js';
 import { errorHandler, notFound } from './middlewares/errorMiddlewares.js';
 import connectDB from './config/db.js';
+import path from "path";
 
 //Crete server
 const server = express();
@@ -38,6 +39,8 @@ server.use((req,res,next)=>{
 server.use(config.api.prefix, routes);
 
 // Upload folder
+const __dirname = path.resolve();
+server.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 //frontend production 
 
