@@ -13,6 +13,8 @@
   "author": "Grupo 4",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "bcrypt-nodejs": "^0.0.3",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "dotenv": "^10.0.0",
@@ -27,4 +29,3 @@
     "nodemon": "^2.0.15"
   }
 }
-
