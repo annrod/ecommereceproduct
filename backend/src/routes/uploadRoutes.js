@@ -4,6 +4,6 @@ import { protect, admin } from "../middlewares/authMiddlewares.js";
 
 const router = Router();
 
-router.post("/", protect, admin, uploadConfig.single("file"), upload);
+router.post("/", protect, admin, uploadConfig.single('file'), upload);
 
 export default router;
