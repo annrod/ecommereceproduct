@@ -30,7 +30,7 @@ export const getProducts = asyncHandler(async(req,res)=>{
 // @access Private/Admin
 export const createProduct = asyncHandler(async (req,res)=>{
     const product = new Product ({
-        name: 'Sample name',
+        name: req.body.name,
         price: 0,
         user: req.user._id,
         image: '/images/sample.jpg',

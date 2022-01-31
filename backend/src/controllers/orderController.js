@@ -44,7 +44,7 @@ export const getOrderById = asyncHandler(async (req, res) =>{
     // Y arrojar el error: 'Order not found
     //order.user._id === req.user._id metodo equals
     const order=await Order.findById(req.params.id).populate('user', 'name email');
-    if(order && req.user.isAdmin && order.user._id.equals(req.user._id)){
+    if(order && req.user.isAdmin || order.user._id.equals(req.user._id)){
         res.json({
             name: req.user.name,
             email: req.user.email
