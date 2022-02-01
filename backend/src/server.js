@@ -30,7 +30,8 @@ server.use((req,res,next)=>{
     // type of headers
     res.header('Access-Control-Allow-Headers', ' content-type,authorization');
     // type of methods
-    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,HEAD');
+    //res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE,HEAD');
+    res.header('Access-Control-Allow-Methods','*');
     // next event
     return next();
 });
@@ -43,7 +44,18 @@ const __dirname = path.resolve();
 server.use("/uploads", express.static(path.join(__dirname, "/uploads")));
 
 //frontend production 
-
+if (config.nodeEnv === 'production') {
+    server.use(express.static(path.join(__dirname, 'frontend/build')));
+    server.get('*', (req, res) =>
+      res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    );
+  } else {
+    // API status
+    server.get(config.api.prefix, (req, res) => {
+      res.send('API is running...');
+    });
+  }
+  
 //Api status
 server.get(config.api.prefix,(req,res)=>{
     res.send('API is running...');
