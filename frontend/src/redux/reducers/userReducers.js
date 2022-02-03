@@ -19,6 +19,19 @@ export const userConfirmation = (state = {valor : false}, action) => {
             };
         default:
             return state;
-    } 
-        
+    }         
 };
+
+
+export const reducerUserRegister = (state = {loading : false}, action) => {
+    switch (action.type) {
+        case actionTypes.REGISTER_USER_REQUEST:
+          return { loading: true };
+        case actionTypes.REGISTER_USER_SUCCESS:
+          return { loading: false, userInfo: action.payload };
+        case actionTypes.REGISTER_USER_FAIL:
+          return { loading: false, error: action.payload };
+        default:
+          return state;
+      }
+}
