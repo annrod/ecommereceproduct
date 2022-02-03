@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../redux/actions/userActions";
+import { userInfo } from "../redux/actions/userActions";
+
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -14,17 +15,24 @@ const Login = () => {
 
   const navigate = useNavigate();
   console.log(valor);
+
   useEffect(() => {
-    if (valor?.name) {
-      navigate("/");
+    if (userInfo) {
+      navigate(redirect);
     }
-  }, [valor]);
+  }, [navigate, userInfo, redirect]);
+
+   const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(authUser(valor.email, valor.password));
+  };
+
 
   return (
     <div className="text-center">
       <Row className="justify-content-md-center">
         <Col xs={6} md={4} >
-          <Form>
+          <Form onSubmit={submitHandler}>
             <h1>Acceso</h1>
             <Form.Group
               as={Row}
@@ -63,9 +71,8 @@ const Login = () => {
             </Form.Group>
           </Form>
           <button
-            onClick={() => dispatch(userLogin(email, password))}
             className="btn btn-outline-dark"
-            type="button"
+            type="submit"
           >
             Login
           </button>
