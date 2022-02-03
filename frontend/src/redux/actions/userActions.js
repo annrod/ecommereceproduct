@@ -13,6 +13,7 @@ export const userLogin = (email = "", password = "") => {
         type: actionTypes.USER_SUCCESS,
         payload: data,
       });
+      localStorage.setItem('userinfo', JSON.stringify(data));
     } catch (error) {
       dispatch({
         type: actionTypes.USER_FAIL,

@@ -17,6 +17,7 @@ const Login = () => {
   useEffect(() => {
     if (valor?.name) {
       navigate("/");
+      console.log(valor.name);
     }
   }, [valor]);
 
@@ -25,7 +26,8 @@ const Login = () => {
       <Row className="justify-content-md-center">
         <Col xs={6} md={4} >
           <Form>
-            <h1>Acceso</h1>
+            <h1 >Acceso</h1>
+            <p></p>
             <Form.Group
               as={Row}
               className="mb-3"
@@ -37,7 +39,7 @@ const Login = () => {
               <Col sm="10">
                 <Form.Control
                   placeholder="Correo electrónico"
-                  plaintext
+                  //plaintext
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />

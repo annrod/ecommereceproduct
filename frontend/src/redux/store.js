@@ -3,7 +3,13 @@ import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer  from './reducers';
 
-const initialState = {};
+const userStorage = localStorage.getItem('userinfo')? JSON.parse(localStorage.getItem('userinfo')) : null
+
+const initialState = {
+  loginUser: {
+    valor: userStorage,
+  }
+};
 
 const middleware =[thunk];
 
