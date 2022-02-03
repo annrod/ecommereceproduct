@@ -78,14 +78,14 @@ class CarouselSlider extends Component {
           onExited={this.onExited}
           key={item.src}
         >
-          <img src={item.src} alt={item.altText} width="50%" height='500px'/>
+          <img src={item.src} alt={item.altText} width="75%" height='500px'/>
           <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
         </CarouselItem>
       );
     });
 
     return (
-      <Carousel
+      <Carousel className='text-center'
         activeIndex={activeIndex}
         next={this.next}
         previous={this.previous}
