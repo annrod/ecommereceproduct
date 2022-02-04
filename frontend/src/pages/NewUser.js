@@ -30,6 +30,10 @@ const NewUser = () => {
     if (userinfo) {
       setMessage("");
       setMessageSuccess("Usuario registrado con exito, bienvenido!");
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");  
     }
   }, [userinfo]);
 
@@ -37,15 +41,11 @@ const NewUser = () => {
     e.preventDefault();
     if (password !== confirmPassword) {
       setMessage("Las contraseñas ingresadas deben ser iguales");
-      //setMessageSuccess("");
+      setMessageSuccess("");
       console.log(password);
       console.log(confirmPassword);
     } else {
-      dispatch(registerUsers(name, email, password));
-      setName("");
-      setEmail("");
-      setPassword("");
-      setConfirmPassword("");
+      dispatch(registerUsers(name, email, password));   
     }
   };  
 

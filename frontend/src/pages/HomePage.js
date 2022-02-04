@@ -8,25 +8,18 @@ import Loader from '../components/Loader';
 import Message from '../components/Message';
 import Product from '../components/Product';
 import { listProducts, listProductsId } from '../redux/actions/productActions';
-
-
-
 //import Paginate from '../components/Paginate';
-
 
 const HomePage = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const productList = useSelector((state) => state.productList);
-    const { loading, error, products } = productList;
-
-    
+    const { loading, error, products } = productList;    
 
     const params = useParams();
     const { keyword } = params;
     const pageNumber = params.pageNumber || 1;
-   
-    
+       
     useEffect(()=>{
         dispatch(listProducts(keyword, pageNumber));
     }, [dispatch, keyword, pageNumber]);
