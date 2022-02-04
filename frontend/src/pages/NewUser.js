@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Form, Row, Col, FormGroup, FormLabel } from 'react-bootstrap';
+import { Form, Row, Col, FormGroup, FormLabel, Button } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 import Message from '../components/Message';
 import Loader from '../components/Loader';
@@ -14,8 +14,8 @@ const NewUser = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const dispatch = useDispatch();
-  const uRegister = useSelector((state) => state.uRegister);
-  const { loading, error, valor } = uRegister;
+  const userSignUp = useSelector((state) => state.userSignUp);
+  const { loading, error, userinfo } = userSignUp;
 
   
   const navigate = useNavigate();
@@ -23,29 +23,45 @@ const NewUser = () => {
   const location = useLocation();
   const redirect = location.search ? location.search.split('=')[1] : '/';
 
-    useEffect(() => {
-    if (valor) {
-      setEmail("");
-      setName("");
+  const [message, setMessage] = useState(null);
+  const [messagesuccess, setMessageSuccess] = useState(null);
+  
+  useEffect(() => {
+    if (userinfo) {
+      setMessage("");
+      setMessageSuccess("Usuario registrado con exito, bienvenido!");
     }
-  }, [valor]);
+  }, [userinfo]);
 
-  const submitHandler = () => {
-    dispatch(registerUsers(name, email, password))
-    navigate("/login")
-  };
+  const submitHandler = (e) => {
+    e.preventDefault();
+    if (password !== confirmPassword) {
+      setMessage("Las contraseñas ingresadas deben ser iguales");
+      //setMessageSuccess("");
+      console.log(password);
+      console.log(confirmPassword);
+    } else {
+      dispatch(registerUsers(name, email, password));
+      setName("");
+      setEmail("");
+      setPassword("");
+      setConfirmPassword("");
+    }
+  };  
 
   return (
     <div>
   
       <h1>Registro de usuario</h1>
-
+      <p></p>
+      {message && <Message variant='danger'>{message}</Message>}
+      {messagesuccess && <Message variant='success'>{messagesuccess}</Message>}
       {error && <Message variant='danger'>{error}</Message>}
       {loading ? (
         <Loader />
       ) : (
         <>
-          <Form>
+          <Form onSubmit={submitHandler}>
             <FormGroup controlId='name' className='mb-2'>
               <FormLabel>Nombre</FormLabel>
               <Form.Control
@@ -86,12 +102,12 @@ const NewUser = () => {
                   setConfirmPassword(e.target.value)
                 }></Form.Control>
             </FormGroup>
-            <button className="btn btn-outline-dark" type="button"
-            onClick={submitHandler}>
+            <Button className="btn btn-dark" type="submit">
               Registrarse
-            </button>
+            </Button>
           </Form>
           <Row className='py-3'>
+            <p></p>
             <Col>
               Ya tienes una cuenta?{' '}
               <Link to={redirect ? `/login?redirect=/${redirect}` : '/login'}>

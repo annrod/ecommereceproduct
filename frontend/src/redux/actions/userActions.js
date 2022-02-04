@@ -6,7 +6,9 @@ export const userLogin = (email = "", password = "") => {
   return async (dispatch) => {
     console.log("en action");
     try {
-      dispatch({ type: actionTypes.USER_STARTED });
+      dispatch({ 
+        type: actionTypes.USER_STARTED 
+      });
       const data = await authUser(email, password);
       console.log(data);
       dispatch({
@@ -26,6 +28,14 @@ export const userLogin = (email = "", password = "") => {
   };
 };
 
+export const userLogout = () => {
+  return (dispatch) => {
+    console.log("en action cerrando sesion ");
+    localStorage.removeItem('userinfo');
+    dispatch({ type: actionTypes.REGISTER_USER_LOGOUT });
+  };
+};
+
 export const registerUsers = (name, email, password) => {
   return async (dispatch) => {
     console.log("en action registro usuario");
@@ -41,7 +51,7 @@ export const registerUsers = (name, email, password) => {
 
     } catch (error) {
       dispatch({
-        type: actionTypes.USER_REGISTER_FAIL,
+        type: actionTypes.REGISTER_USER_FAIL,
         payload:
           error.response && error.response.data.message
             ? error.response.data.message

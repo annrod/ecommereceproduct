@@ -1,32 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link } from 'react-router-dom';
 import { userLogin } from "../redux/actions/userActions";
+import Loader from '../components/Loader';
+import Message from '../components/Message';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  
   const dispatch = useDispatch();
-  const loginUser = useSelector((state) => state.loginUser);
-  const { loading, error, valor } = loginUser;
+  const userLog = useSelector((state) => state.userLog);
+  const { loading, error, userinfo } = userLog;
 
-  const navigate = useNavigate();
-  console.log(valor);
-  useEffect(() => {
-    if (valor?.name) {
-      navigate("/");
-      console.log(valor.name);
-    }
-  }, [valor]);
+   
+  const submitHandler = (e) => {
+    e.preventDefault();
+    dispatch(userLogin(email, password));
+  };
 
   return (
     <div className="text-center">
       <Row className="justify-content-md-center">
-        <Col xs={6} md={4} >
-          <Form>
-            <h1 >Acceso</h1>
+        <Col xs={6} md={4}>
+          <Form onSubmit={submitHandler}>
+            <h1>Acceso</h1>
+              {error && <Message variant='danger'>{error}</Message>}
+              {loading ? (
+                <Loader />
+                  ) : (
+                    <>
             <p></p>
             <Form.Group
               as={Row}
@@ -63,17 +67,25 @@ const Login = () => {
                 />
               </Col>
             </Form.Group>
-          </Form>
-          <button
-            onClick={() => dispatch(userLogin(email, password))}
-            className="btn btn-outline-dark"
-            type="button"
-          >
+            <button className="btn btn-outline-dark" type="submit">
             Login
           </button>
+          <p></p>
+          <Row className='py-3'>
+            <Col>
+              Nuevo usuario? {' '}
+              <Link to={'/newuser'}>
+                Crear cuenta
+              </Link>
+            </Col>
+          </Row>
+          </>
+           )}
+          </Form>
         </Col>
       </Row>
     </div>
   );
 };
+
 export default Login;

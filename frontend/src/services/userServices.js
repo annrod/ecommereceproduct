@@ -2,7 +2,7 @@ import axios from "axios";
 import { BASE_URL_BACK } from "../config";
 
 export const authUser = async (email, password) => {
-    console.log('en service');
+    console.log('en service login');
   try {
       const {data} = await axios.post(
           `${BASE_URL_BACK}/users/login`, {email, password}

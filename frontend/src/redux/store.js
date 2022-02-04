@@ -6,7 +6,7 @@ import reducer  from './reducers';
 const userStorage = localStorage.getItem('userinfo')? JSON.parse(localStorage.getItem('userinfo')) : null
 
 const initialState = {
-  loginUser: {
+  userLog: {
     valor: userStorage,
   }
 };
