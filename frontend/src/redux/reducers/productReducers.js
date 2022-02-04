@@ -23,3 +23,49 @@ export const productListReducer = (state = { products: [] }, action)=>{
             return state;
     }
 };
+
+export const productIdReducer = (state = { product: []},action)=>{
+    switch(action.type){
+        case actionTypes.PRODUCT_LIST_REQUEST:
+            return {
+                loading: true, 
+                product: []
+            };
+        case actionTypes.PRODUCT_LIST_SUCCESS:
+            return {
+                loading: false,
+                product: action.payload.product,
+            };
+        case actionTypes.PRODUCT_LIST_FAIL:
+            return{
+                loading:false,
+                error: action.payload
+            };
+        default:
+            return state;
+    }
+
+};
+
+export const productReviewReducer = (state = { product: []},action)=>{
+    switch(action.type){
+        case actionTypes.PRODUCT_LIST_REQUEST:
+            return {
+                loading: true, 
+                product: []
+            };
+        case actionTypes.PRODUCT_LIST_SUCCESS:
+            return {
+                loading: false,
+                product: action.payload.product,
+            };
+        case actionTypes.PRODUCT_LIST_FAIL:
+            return{
+                loading:false,
+                error: action.payload
+            };
+        default:
+            return state;
+    }
+
+};

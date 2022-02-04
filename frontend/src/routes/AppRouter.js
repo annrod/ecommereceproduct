@@ -4,7 +4,11 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from '../components/Header';
 import Login from '../pages/Login';
 import HomePage from '../pages/HomePage';
+<<<<<<< HEAD
 import NewUser from '../pages/NewUser';
+=======
+import ProductPage from '../pages/ProductPage';
+>>>>>>> Cart
 
 const AppRouter = () => {
     return (
@@ -14,6 +18,7 @@ const AppRouter = () => {
           <Container>
             <Routes>
               <Route path='/Login' element={<Login />} />
+              <Route path='/product/:id' element={<ProductPage />} />
               <Route path='/' element={<HomePage />} />
               <Route path='/NewUser' element={<NewUser />} />
             </Routes>
