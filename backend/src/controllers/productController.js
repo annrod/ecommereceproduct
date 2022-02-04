@@ -106,9 +106,7 @@ export const getProductById = asyncHandler(async(req,res)=>{
                
     }else{
         res.json({
-            //user: req.user.id,
-            name: product.name,
-            price: product.price,
+            product
         });   
     }
 });
